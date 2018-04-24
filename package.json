@@ -20,6 +20,12 @@
                 "command": "extension.CodeSender",
                 "title": "CodeSender"
             }
+        ],
+        "keybindings":[
+            {
+                "command": "extension.CodeSender",
+                "key": "F2"
+            }
         ]
     },
     "scripts": {
