@@ -31,37 +31,40 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showWarningMessage('No code detected.');
                 return;
             }
-    
-            let temp = editor.document.isUntitled;
-            let fileName = editor.document.fileName;
-            console.log(temp);
-            console.log(fileName);
-            // check if it is temp file, if yes then save to a temp file
-            
+
+            // initialize filesystem, operation system, and socket
             var fs = require('fs');
             var os = require('os');
-            var tmpfolder = os.tmpdir();
-            var filename = tmpfolder + "\\TempScript.py";
-            fs.writeFileSync(filename, text);
+            var net = require('net');
+            var client = new net.Socket();
+            // check if it is temp file, if yes then save to a temp file
+            let temp = editor.document.isUntitled;
+            if (temp) {
+                var tmpfolder = os.tmpdir();
+                var filename = tmpfolder + "\\TempScript.py";
+                fs.writeFileSync(filename, text);
+                SendToRhino(filename);
+            } else {
+                let fileName = editor.document.fileName;
+                editor.document.save().then(() => SendToRhino(fileName));
+            }
         }
-        
-        // send the code to rhino
-        var net = require('net');
-        var client = new net.Socket();
 
-        client.connect(614, '127.0.0.1', function() {
-            client.write(filename);
-            vscode.debug.activeDebugConsole.append('\n');
-            vscode.debug.activeDebugConsole.appendLine(`@ ====== ${(new Date()).toLocaleString()} ======`);
-            vscode.debug.activeDebugConsole.append('\n');
-        });
-
+        // send the python script file path to Rhino
+        function SendToRhino (path: string) {
+            client.connect(614, '127.0.0.1', function() {
+                vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => {
+                    vscode.debug.activeDebugConsole.append('\n');
+                    vscode.debug.activeDebugConsole.appendLine(`@ ====== ${(new Date()).toLocaleString()} ======`);
+                    vscode.debug.activeDebugConsole.append('\n');
+                });
+                client.write(path);
+            });
+        }
 
         client.on('data', function(data: Buffer) {
-            // vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction')
             vscode.debug.activeDebugConsole.append(data.toString());
             vscode.debug.activeDebugConsole.append('\n');
-            // client.destroy();
         });
         
         // Add a 'close' event handler for the client socket
