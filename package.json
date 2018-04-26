@@ -1,6 +1,7 @@
 {
     "name": "rhinopython",
     "displayName": "RhinoPython",
+    "icon": "image/logo.png",
     "description": "A Visual Studio Code extension to program IronPython for rhino.",
     "version": "0.0.1",
     "publisher": "jingchengchen",
@@ -42,5 +43,9 @@
         "tslint": "^5.8.0",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ccc159/PythonScript.git"
     }
 }
