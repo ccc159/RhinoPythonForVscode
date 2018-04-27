@@ -28,7 +28,23 @@
                 "command": "extension.CodeSender",
                 "key": "F2"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "RhinoPython configuration",
+            "properties": {
+                "RhinoPython.Enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable RhinoPython or not."
+                },
+                "RhinoPython.PreserveLog": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Specifies whether to keep the console log history or not."
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

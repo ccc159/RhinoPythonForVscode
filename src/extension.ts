@@ -10,14 +10,14 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "rhinopython" is now active!');
     
-    
+    const RhinoPythonConfig = vscode.workspace.getConfiguration('RhinoPython');
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     let disposable = vscode.commands.registerCommand('extension.CodeSender', () => {
-        // The code you place here will be executed every time your command is executed
+        // check if rhino python is enabled by the user
+        if (!RhinoPythonConfig.Enabled) { return; }
         
         // check if editor is open
         let editor = vscode.window.activeTextEditor;
@@ -52,12 +52,17 @@ export function activate(context: vscode.ExtensionContext) {
 
         // send the python script file path to Rhino
         function SendToRhino (path: string) {
+            function onConnectionDisplay () {
+                vscode.debug.activeDebugConsole.append('\n');
+                vscode.debug.activeDebugConsole.appendLine(`@ ====== ${(new Date()).toLocaleString()} ======`);
+                vscode.debug.activeDebugConsole.append('\n');
+            }
             client.connect(614, '127.0.0.1', function() {
-                vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => {
-                    vscode.debug.activeDebugConsole.append('\n');
-                    vscode.debug.activeDebugConsole.appendLine(`@ ====== ${(new Date()).toLocaleString()} ======`);
-                    vscode.debug.activeDebugConsole.append('\n');
-                });
+                if (RhinoPythonConfig.PreserveLog) {
+                    onConnectionDisplay();
+                } else {
+                    vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => onConnectionDisplay());
+                }
                 client.write(path);
             });
         }
