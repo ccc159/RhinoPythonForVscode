@@ -11,27 +11,23 @@ For example if there is an image subfolder under your extension project workspac
 
 \!\[feature X\]\(images/feature-x.png\)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
 ## Requirements
 
-This is the client side of RhinoPython editor. To bridge it to Rhino you need a server to listen to VS Code editor, which is another plugin called [CodeListener](https://github.com/ccc159/CodeListener)
+This is the client side of RhinoPython editor. To bridge it to Rhino you need a server to listen to VS Code editor, which is another plugin called [CodeListener](https://github.com/ccc159/CodeListener).
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+The following settings can be configured under **User Settings**:
 
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `RhinoPython.Enabled`: Enable/Disable this RhinoPython extension.
+* `RhinoPython.PreserveLog`: Specifies whether to keep the console log history or not.
 
 ## Known Issues
 
 - The debugger has not implemented yet.
 - Exceptions are now generally handled, in case of any unknown errors or exceptions please contact the author.
+
+> This release is in very early development and has not been fully tested. You are likely to expect different bugs or errors.
 
 ## Release Notes
 
