@@ -5,11 +5,8 @@ RhinoPython is a plugin to allow you to code Rhino python script in VS Code edit
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
+The same way as you use the original editor. Press `F2` to execute the code.
+![feature](image/feature.gif)
 
 ## Requirements
 
