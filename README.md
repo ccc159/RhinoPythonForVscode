@@ -29,7 +29,7 @@ This is the client side of RhinoPython editor. To bridge it to Rhino you need a 
 ![pluginpath](image/pluginpath.png)
 ![autocompletepath](image/autocompletepath.png)
 
-+ Start VS Code, open `user settings` by keyboard shortcut `Ctrl+,` paste the libraries paths and autocomplete path into the `user settings` with key "python.autoComplete.extraPaths", below is an example setting.
++ Start VS Code, open `user settings` by keyboard shortcut `Ctrl+,` paste the **libraries paths** and **autocomplete path** into the `user settings` with key "python.autoComplete.extraPaths", below is an example setting.
 
 ```javascript
 {
@@ -80,8 +80,14 @@ The following settings can be configured under **User Settings**:
 
 > This release is in very early development and has not been fully tested. You are likely to expect different bugs or errors.
 
+> This release is **ONLY** tested in **Rhino5 64 bit**. NO GUARANTEE for rhino6 yet.
+
 ## Release Notes
 
-### 1.0.0
+### 0.1.0
 
 - Initial release of RhinoPython VS Code plugin.
+
+### 0.1.1
+
+- Updated readme with detailed instructions.
