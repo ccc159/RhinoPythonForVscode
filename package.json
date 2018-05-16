@@ -11,7 +11,13 @@
     "categories": [
         "Other"
     ],
-    "keywords": ["Rhino", "Python", "IronPython", "PythonScript", "RhinoScript"],
+    "keywords": [
+        "Rhino",
+        "Python",
+        "IronPython",
+        "PythonScript",
+        "RhinoScript"
+    ],
     "activationEvents": [
         "onCommand:extension.CodeSender"
     ],
@@ -23,7 +29,7 @@
                 "title": "CodeSender"
             }
         ],
-        "keybindings":[
+        "keybindings": [
             {
                 "command": "extension.CodeSender",
                 "key": "F2"
