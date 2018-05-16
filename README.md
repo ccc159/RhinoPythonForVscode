@@ -31,6 +31,8 @@ This is the client side of RhinoPython editor. To bridge it to Rhino you need a 
 
 + Start VS Code, open `user settings` by keyboard shortcut `Ctrl+,` paste the **libraries paths** and **autocomplete path** into the `user settings` with key "python.autoComplete.extraPaths", below is an example setting.
 
+> If `AutoComplete` doesn't work even if you add the path into `python.autoComplete.extraPaths`, it's probably that you haven't add the root folder of the library. For instance, if your library `ExampleLib` is under folder `"...\Libs"`, you might have to add `"...\Libs\ExampleLib"` instead of `"...\Libs"`.
+
 ```javascript
 {
     // disable certain pylint messages
@@ -62,9 +64,11 @@ This is the client side of RhinoPython editor. To bridge it to Rhino you need a 
 ## Usage
 
 + Start Rhino, type command `CodeListener`. You should see `VS Code Listener Started...`.
+> You can add `CodeListener` into Rhino Command Lists every time Rhino starts.
 + Start VS Code, create a new file *(To have python autocomplete and lint working you have to [specify it's python file](https://code.visualstudio.com/docs/languages/overview#_changing-the-language-for-the-selected-file))* or open an existing python file.
-+ Send the your code by simply press `F2` or by typing command `CodeSender` in **Command Palette**(`F1` or `Ctrl+Shift+P`)
-+ You should then see returned printed message or errors in `Debug Console`.
++ Send the your code by simply press `F2` or by typing command `CodeSender` in **Command Palette**(`F1` or `Ctrl+Shift+P`) You should then see returned printed message or errors in `Debug Console`.
++ If you want to reset Rhino Python Script Engine, simply press `Ctrl + R`.
++ If you want to reset engine and send code at the same time, you can press `Crtl + F2`.
 
 ## Extension Settings
 
@@ -80,7 +84,7 @@ The following settings can be configured under **User Settings**:
 
 > This release is in very early development and has not been fully tested. You are likely to expect different bugs or errors.
 
-> This release is **ONLY** tested in **Rhino5 64 bit**. NO GUARANTEE for rhino6 yet.
+> This release is **ONLY** tested in **Rhino5 64 bit**. It doesn't support Rhino 6 yet.
 
 ## Release Notes
 
@@ -91,3 +95,10 @@ The following settings can be configured under **User Settings**:
 ### 0.1.1
 
 - Updated readme with detailed instructions.
+
+### 0.1.2
+
+- Added Reset Script Engine Command.
+- Added Reset&Execute Command.
+- Added import module support in same folder.
+- Added detailed exception message handling.
