@@ -19,7 +19,9 @@
         "RhinoScript"
     ],
     "activationEvents": [
-        "onCommand:extension.CodeSender"
+        "onCommand:extension.CodeSender",
+        "onCommand:extension.CodeSenderResetNRun",
+        "onCommand:extension.CodeSenderReset"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -27,12 +29,28 @@
             {
                 "command": "extension.CodeSender",
                 "title": "CodeSender"
+            },
+            {
+                "command": "extension.CodeSenderResetNRun",
+                "title": "CodeSenderResetNRun"
+            },
+            {
+                "command": "extension.CodeSenderReset",
+                "title": "CodeSenderReset"
             }
         ],
         "keybindings": [
             {
                 "command": "extension.CodeSender",
                 "key": "F2"
+            },
+            {
+                "command": "extension.CodeSenderResetNRun",
+                "key": "Ctrl+F2"
+            },
+            {
+                "command": "extension.CodeSenderReset",
+                "key": "Ctrl+R"
             }
         ],
         "configuration": {
