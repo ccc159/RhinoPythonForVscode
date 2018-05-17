@@ -102,3 +102,10 @@ The following settings can be configured under **User Settings**:
 - Added Reset&Execute Command.
 - Added import module support in same folder.
 - Added detailed exception message handling.
+
+### 0.1.3
+
+- Added Undo command for code execution.
+- Disallowed duplicated code sending while previous code is running.
+- Added settings to decide CodeSender resets engine or not.
+
