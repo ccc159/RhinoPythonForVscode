@@ -56,7 +56,11 @@ This is the client side of RhinoPython editor. To bridge it to Rhino you need a 
     // Enable/Disable rhinopython
     "RhinoPython.Enabled": true,
     // Show/Hide history console log
-    "RhinoPython.PreserveLog": true
+    "RhinoPython.PreserveLog": false,
+    // True if you want to reset script engine every time you send code
+    "RhinoPython.ResetAndRun": true,
+    // Specifies whether to minimize the vs code editor when running the code.
+    "RhinoPython.MinimizeWindowWhenRunning": false
 }
 ```
 ![settings](image/settings.png)
@@ -65,10 +69,10 @@ This is the client side of RhinoPython editor. To bridge it to Rhino you need a 
 
 + Start Rhino, type command `CodeListener`. You should see `VS Code Listener Started...`.
 > You can add `CodeListener` into Rhino Command Lists every time Rhino starts.
-+ Start VS Code, create a new file *(To have python autocomplete and lint working you have to [specify it's python file](https://code.visualstudio.com/docs/languages/overview#_changing-the-language-for-the-selected-file))* or open an existing python file.
-+ Send the your code by simply press `F2` or by typing command `CodeSender` in **Command Palette**(`F1` or `Ctrl+Shift+P`) You should then see returned printed message or errors in `Debug Console`.
++ Start VS Code, create a new file *(To have python autocomplete and lint working you have to [specify it's python file](https://code.visualstudio.com/docs/languages/overview#_changing-the-language-for-the-selected-file))* or open an existing *python file* or *folder* or *workspace*.
++ Send the your code by simply press `F2` or by typing command `CodeSender` in **Command Palette**(`F1` or `Ctrl+Shift+P`) You should then see returned printed message or errors in `Debug Console`. Depending on your `RhinoPython.ResetAndRun` settings, you might reset script engine every time before you send.
 + If you want to reset Rhino Python Script Engine, simply press `Ctrl + R`.
-+ If you want to reset engine and send code at the same time, you can press `Crtl + F2`.
++ If you want to just send the code without resetting, regardless of `RhinoPython.ResetAndRun` setting, you can press `Crtl + F2`.
 
 ## Extension Settings
 
@@ -76,6 +80,8 @@ The following settings can be configured under **User Settings**:
 
 * `RhinoPython.Enabled`: Enable/Disable this RhinoPython extension.
 * `RhinoPython.PreserveLog`: Specifies whether to keep the console log history or not.
+* `RhinoPython.ResetAndRun`: Determines if `F2` (`CodeSender` Command) reset the script engine every time before it executes.
+* `RhinoPython.MinimizeWindowWhenRunning`: Specifies whether to minimize the vs code editor when running the code.
 
 ## Known Issues
 
@@ -109,3 +115,6 @@ The following settings can be configured under **User Settings**:
 - Disallowed duplicated code sending while previous code is running.
 - Added settings to decide CodeSender resets engine or not.
 
+### 0.1.4
+
+- Added setting to minimize window when executing code.

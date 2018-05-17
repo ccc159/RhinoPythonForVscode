@@ -3,7 +3,7 @@
     "displayName": "RhinoPython",
     "icon": "image/logo.png",
     "description": "A Visual Studio Code extension to program IronPython for rhino.",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "publisher": "jingchengchen",
     "engines": {
         "vscode": "^1.22.0"
@@ -71,6 +71,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Specifies whether to keep the console log history or not."
+                },
+                "RhinoPython.MinimizeWindowWhenRunning": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Specifies whether to minimize the vs code editor when running the code."
                 }
             }
         }

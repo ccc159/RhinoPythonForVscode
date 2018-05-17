@@ -30,9 +30,11 @@ export function activate(context: vscode.ExtensionContext) {
         if (RhinoPythonConfig.PreserveLog) {
             onDataReceivedDisplay();
         } else {
-            vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => onDataReceivedDisplay());
+            vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => {
+                onDataReceivedDisplay();
+                vscode.debug.activeDebugConsole.append(data.toString());
+            });
         }
-        vscode.debug.activeDebugConsole.append(data.toString());
         isRunning = false;
         client.destroy();
     });
@@ -88,15 +90,16 @@ export function activate(context: vscode.ExtensionContext) {
             // check if it is temp file, if yes then save to a temp file
             let temp = editor.document.isUntitled;
             let run = true;
+            let minimize = RhinoPythonConfig.MinimizeWindowWhenRunning;
             if (temp) {
                 var tmpfolder = os.tmpdir();
                 let filename = tmpfolder + "\\TempScript.py";
                 fs.writeFileSync(filename, text);
-                let msgObject = JSON.stringify({ reset, temp, filename, run });
+                let msgObject = JSON.stringify({ reset, temp, filename, run, minimize });
                 SendToRhino(msgObject);
             } else {
                 let filename = editor.document.fileName;
-                let msgObject = JSON.stringify({ reset, temp, filename, run });
+                let msgObject = JSON.stringify({ reset, temp, filename, run, minimize });
                 editor.document.save().then(() => SendToRhino(msgObject));
             }
         }
