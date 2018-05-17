@@ -43,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
         // console.log('Rhino disconnected.');
     });
 
-    client.on('error', function(err: object) {
+    client.on('error', function(err: any) {
         if (err.code === "ECONNREFUSED") {
             vscode.window.showWarningMessage('Cannot connect Rhino. Please make sure Rhino is running CodeListener.');
         } else if (err.code === "EISCONN") {
