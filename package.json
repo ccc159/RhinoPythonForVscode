@@ -20,7 +20,7 @@
     ],
     "activationEvents": [
         "onCommand:extension.CodeSender",
-        "onCommand:extension.CodeSenderResetNRun",
+        "onCommand:extension.CodeSenderNoReset",
         "onCommand:extension.CodeSenderReset"
     ],
     "main": "./out/extension",
@@ -31,8 +31,8 @@
                 "title": "CodeSender"
             },
             {
-                "command": "extension.CodeSenderResetNRun",
-                "title": "CodeSenderResetNRun"
+                "command": "extension.CodeSenderNoReset",
+                "title": "CodeSenderNoReset"
             },
             {
                 "command": "extension.CodeSenderReset",
@@ -45,7 +45,7 @@
                 "key": "F2"
             },
             {
-                "command": "extension.CodeSenderResetNRun",
+                "command": "extension.CodeSenderNoReset",
                 "key": "Ctrl+F2"
             },
             {
@@ -62,9 +62,14 @@
                     "default": true,
                     "description": "Enable/Disable this RhinoPython extension."
                 },
-                "RhinoPython.PreserveLog": {
+                "RhinoPython.ResetAndRun": {
                     "type": "boolean",
                     "default": true,
+                    "description": "True if you want to reset script engine every time you send code."
+                },
+                "RhinoPython.PreserveLog": {
+                    "type": "boolean",
+                    "default": false,
                     "description": "Specifies whether to keep the console log history or not."
                 }
             }

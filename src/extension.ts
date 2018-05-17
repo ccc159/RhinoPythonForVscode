@@ -12,44 +12,57 @@ export function activate(context: vscode.ExtensionContext) {
     const RhinoPythonConfig = vscode.workspace.getConfiguration('RhinoPython');
 
     // send the messgage to Rhino
+    var isRunning = false;
     var net = require('net');
     var client = new net.Socket();
     function SendToRhino (messgage: string) {
-        function onConnectionDisplay () {
-            vscode.debug.activeDebugConsole.append('\n');
-            vscode.debug.activeDebugConsole.appendLine(`@ ====== ${(new Date()).toLocaleString()} ======`);
-            vscode.debug.activeDebugConsole.append('\n');
-        }
         client.connect(614, '127.0.0.1', function() {
-            if (RhinoPythonConfig.PreserveLog) {
-                onConnectionDisplay();
-            } else {
-                vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => onConnectionDisplay());
-            }
+            isRunning = true;
             client.write(messgage);
         });
     }
 
+    function onDataReceivedDisplay () {
+        vscode.debug.activeDebugConsole.appendLine(`@ ====== ${(new Date()).toLocaleString()} ======`);
+    }
+
     client.on('data', function(data: Buffer) {
+        if (RhinoPythonConfig.PreserveLog) {
+            onDataReceivedDisplay();
+        } else {
+            vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => onDataReceivedDisplay());
+        }
         vscode.debug.activeDebugConsole.append(data.toString());
-        vscode.debug.activeDebugConsole.append('\n');
+        isRunning = false;
+        client.destroy();
     });
 
     // Add a 'close' event handler for the client socket
     client.on('close', function() {
+        isRunning = false;
         // console.log('Rhino disconnected.');
     });
 
     client.on('error', function(err: object) {
-        vscode.debug.activeDebugConsole.appendLine(err.toString());
-        vscode.debug.activeDebugConsole.appendLine('Please make sure Rhino is running CodeListener.');
+        if (err.code === "ECONNREFUSED") {
+            vscode.window.showWarningMessage('Cannot connect Rhino. Please make sure Rhino is running CodeListener.');
+        } else if (err.code === "EISCONN") {
+            vscode.window.showWarningMessage('Cannot send code. An existing code is still running.');
+        } else {
+            vscode.window.showWarningMessage(err.toString());
+        }
+        isRunning = false;
+        client.destroy();
     });
 
     // register execute command
     let disposable = vscode.commands.registerCommand('extension.CodeSender', args => {
         // check if rhino python is enabled by the user
         if (!RhinoPythonConfig.Enabled) { return; }
-
+        if (isRunning) {
+            vscode.window.showWarningMessage('Cannot send code. An existing code is still running.');
+            return;
+        }
         // check if editor is open
         let editor = vscode.window.activeTextEditor;
         if (!editor) {
@@ -68,7 +81,9 @@ export function activate(context: vscode.ExtensionContext) {
             var os = require('os');
 
             // check if reset engine
-            let reset = args.reset ? true : false;
+            let noreset = args.noreset ? true : false;
+            let reset = RhinoPythonConfig.ResetAndRun;
+            if (noreset) { reset = false; }
 
             // check if it is temp file, if yes then save to a temp file
             let temp = editor.document.isUntitled;
@@ -90,8 +105,8 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(disposable);
 
     // register reset and execute command
-    disposable = vscode.commands.registerCommand('extension.CodeSenderResetNRun', () => {
-        vscode.commands.executeCommand('extension.CodeSender', {reset : true});
+    disposable = vscode.commands.registerCommand('extension.CodeSenderNoReset', () => {
+        vscode.commands.executeCommand('extension.CodeSender', {noreset : true});
     });
 
     context.subscriptions.push(disposable);
