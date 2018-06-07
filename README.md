@@ -1,13 +1,15 @@
-# RhinoPython 
+# RhinoPython
 
 RhinoPython is a plugin to allow you to code Rhino python script in VS Code editor and run it in Rhino runtime. It inherits all the autocomplete intelligence from original rhinopython editor and can react faster, while you can benifit all the amazing advatanges that VS Code brings to you.
+
+It is a **[DesignToProduction](http://designtoproduction.com/)** open source project, programmed initially for internal use.
 
 
 ## Features
 
 The same way as you use the original editor. Just more efficient, simpler and faster.
 
-Check this [youtube video](https://www.youtube.com/watch?v=QbmnKFIKBYs&feature=youtu.be) to see more clearly of the gif shown below. 
+Check this [youtube video](https://www.youtube.com/watch?v=QbmnKFIKBYs&feature=youtu.be) to see more clearly of the gif shown below.
 
 ![feature](image/feature.gif)
 
@@ -118,3 +120,8 @@ The following settings can be configured under **User Settings**:
 ### 0.1.4
 
 - Added setting to minimize window when executing code.
+
+### 0.1.5
+
+- Fixed Codesender not running issues when updating VS Code to May 2018 (version 1.24).
+- Moved this project from personal project to [DesignToProduction](http://designtoproduction.com/) project.

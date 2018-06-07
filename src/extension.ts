@@ -29,6 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
     client.on('data', function(data: Buffer) {
         if (RhinoPythonConfig.PreserveLog) {
             onDataReceivedDisplay();
+            vscode.debug.activeDebugConsole.append(data.toString());
         } else {
             vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => {
                 onDataReceivedDisplay();
@@ -42,6 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Add a 'close' event handler for the client socket
     client.on('close', function() {
         isRunning = false;
+        client.destroy();
         // console.log('Rhino disconnected.');
     });
 
@@ -58,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     // register execute command
-    let disposable = vscode.commands.registerCommand('extension.CodeSender', args => {
+    let disposable = vscode.commands.registerCommand('extension.CodeSender', () => {
         // check if rhino python is enabled by the user
         if (!RhinoPythonConfig.Enabled) { return; }
         if (isRunning) {
@@ -83,9 +85,7 @@ export function activate(context: vscode.ExtensionContext) {
             var os = require('os');
 
             // check if reset engine
-            let noreset = args.noreset ? true : false;
             let reset = RhinoPythonConfig.ResetAndRun;
-            if (noreset) { reset = false; }
 
             // check if it is temp file, if yes then save to a temp file
             let temp = editor.document.isUntitled;
@@ -106,11 +106,6 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(disposable);
-
-    // register reset and execute command
-    disposable = vscode.commands.registerCommand('extension.CodeSenderNoReset', () => {
-        vscode.commands.executeCommand('extension.CodeSender', {noreset : true});
-    });
 
     context.subscriptions.push(disposable);
 
