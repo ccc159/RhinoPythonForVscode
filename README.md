@@ -125,3 +125,10 @@ The following settings can be configured under **User Settings**:
 
 - Fixed Codesender not running issues when updating VS Code to May 2018 (version 1.24).
 - Moved this project from personal project to [DesignToProduction](http://designtoproduction.com/) project.
+
+### 0.1.6
+
+- Fixed multi state message only showing the first message problem.
+- Added command `StopCodeListener` in Rhino to stop CodeListener and free the port for other Rhino App Instances.
+- Objects created by the executed script in Rhino will be selected automatically now.
+- Rhino will force enable view redraw after code execution to avoid the frozen viewport.

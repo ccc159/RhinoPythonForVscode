@@ -26,18 +26,16 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.debug.activeDebugConsole.appendLine(`@ ====== ${(new Date()).toLocaleString()} ======`);
     }
 
-    client.on('data', function(data: Buffer) {
-        if (RhinoPythonConfig.PreserveLog) {
-            onDataReceivedDisplay();
-            vscode.debug.activeDebugConsole.append(data.toString());
+    client.on('connect', function() {
+        if (!RhinoPythonConfig.PreserveLog) {
+            vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => onDataReceivedDisplay());
         } else {
-            vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => {
-                onDataReceivedDisplay();
-                vscode.debug.activeDebugConsole.append(data.toString());
-            });
+            onDataReceivedDisplay();
         }
-        isRunning = false;
-        client.destroy();
+    });
+
+    client.on('data', function(data: Buffer) {
+        vscode.debug.activeDebugConsole.append(data.toString());
     });
 
     // Add a 'close' event handler for the client socket
@@ -104,8 +102,6 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
     });
-
-    context.subscriptions.push(disposable);
 
     context.subscriptions.push(disposable);
 
