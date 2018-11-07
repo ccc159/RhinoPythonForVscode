@@ -4,6 +4,7 @@ RhinoPython is a plugin to allow you to code Rhino python script in VS Code edit
 
 It is a **[DesignToProduction](http://designtoproduction.com/)** open source project, programmed initially for internal use.
 
+:star: From v0.1.7, it supports both **Rhino 5** and **Rhino 6**, with **correct** build being installed.
 
 ## Features
 
@@ -19,6 +20,7 @@ This is the client side of RhinoPython editor. To bridge it to Rhino you need a 
 
 ## Installation
 
+
 + Install [VS code](https://code.visualstudio.com/).
 + Install [python for VS code](https://marketplace.visualstudio.com/items?itemName=ms-python.python). It's recommended to familarize yourself with python for VS code at this [post](https://code.visualstudio.com/docs/languages/python) first.
 + Install [RhinoPython for VS code](https://marketplace.visualstudio.com/items?itemName=jingchengchen.rhinopython).
@@ -33,7 +35,7 @@ This is the client side of RhinoPython editor. To bridge it to Rhino you need a 
 
 + Start VS Code, open `user settings` by keyboard shortcut `Ctrl+,` paste the **libraries paths** and **autocomplete path** into the `user settings` with key "python.autoComplete.extraPaths", below is an example setting.
 
-> If `AutoComplete` doesn't work even if you add the path into `python.autoComplete.extraPaths`, it's probably that you haven't add the root folder of the library. For instance, if your library `ExampleLib` is under folder `"...\Libs"`, you might have to add `"...\Libs\ExampleLib"` instead of `"...\Libs"`.
+> If `AutoComplete` doesn't work even if you add the path into `python.autoComplete.extraPaths`, it's probably that you haven't add the root folder of the library. For instance, if your library `ExampleLib` is under folder `"...\Libs"`, you might have to add `"...\Libs` instead of `"...\Libs\ExampleLib"`.
 
 ```javascript
 {
@@ -50,49 +52,42 @@ This is the client side of RhinoPython editor. To bridge it to Rhino you need a 
         "C:\\Program Files\\Rhinoceros 5 (64-bit)\\Plug-ins\\IronPython\\Lib",
         "C:\\Users\\jingcheng\\AppData\\Roaming\\McNeel\\Rhinoceros\\5.0\\scripts"
     ],
-    "editor.fontSize": 14,
-    "team.showWelcomeMessage": false,
-    "git.enableSmartCommit": true,
-    "git.autofetch": true,
+
+    // enable new language server. THIS IS EXTREMELY IMPORTANT TO HAVE FAST AUTOCOMPLETE!!
+    "python.jediEnabled": false,
 
     // Enable/Disable rhinopython
     "RhinoPython.Enabled": true,
-    // Show/Hide history console log
-    "RhinoPython.PreserveLog": false,
-    // True if you want to reset script engine every time you send code
-    "RhinoPython.ResetAndRun": true,
-    // Specifies whether to minimize the vs code editor when running the code.
-    "RhinoPython.MinimizeWindowWhenRunning": false
+    // True if you want to reset script engine every time you send code, otherwise False
+    "RhinoPython.ResetAndRun": true
 }
 ```
 ![settings](image/settings.png)
+
+> The microsoft team has implemented their own language server, which replaces the old jedi languange server. This has made autocomplete in python super fast and it is strongly recommended to enable it by `"python.jediEnabled": false` in the settings.
 
 ## Usage
 
 + Start Rhino, type command `CodeListener`. You should see `VS Code Listener Started...`.
 > You can add `CodeListener` into Rhino Command Lists every time Rhino starts.
+> There are other commands in Rhino: `StopCodeListener`, `CodeListenerVersion`
 + Start VS Code, create a new file *(To have python autocomplete and lint working you have to [specify it's python file](https://code.visualstudio.com/docs/languages/overview#_changing-the-language-for-the-selected-file))* or open an existing *python file* or *folder* or *workspace*.
 + Send the your code by simply press `F2` or by typing command `CodeSender` in **Command Palette**(`F1` or `Ctrl+Shift+P`) You should then see returned printed message or errors in `Debug Console`. Depending on your `RhinoPython.ResetAndRun` settings, you might reset script engine every time before you send.
 + If you want to reset Rhino Python Script Engine, simply press `Ctrl + R`.
-+ If you want to just send the code without resetting, regardless of `RhinoPython.ResetAndRun` setting, you can press `Crtl + F2`.
+
 
 ## Extension Settings
 
 The following settings can be configured under **User Settings**:
 
 * `RhinoPython.Enabled`: Enable/Disable this RhinoPython extension.
-* `RhinoPython.PreserveLog`: Specifies whether to keep the console log history or not.
 * `RhinoPython.ResetAndRun`: Determines if `F2` (`CodeSender` Command) reset the script engine every time before it executes.
-* `RhinoPython.MinimizeWindowWhenRunning`: Specifies whether to minimize the vs code editor when running the code.
 
 ## Known Issues
 
 - The debugger has not implemented yet.
-- Exceptions are now generally handled, in case of any unknown errors or exceptions please contact the author.
+- It only supports one Rhino instance at a time. If you want to switch Rhino instance, either close the former Rhino instance or command `StopCodeListener` on the former one.
 
-> This release is in very early development and has not been fully tested. You are likely to expect different bugs or errors.
-
-> This release is **ONLY** tested in **Rhino5 64 bit**. It doesn't support Rhino 6 yet.
 
 ## Release Notes
 
@@ -132,3 +127,9 @@ The following settings can be configured under **User Settings**:
 - Added command `StopCodeListener` in Rhino to stop CodeListener and free the port for other Rhino App Instances.
 - Objects created by the executed script in Rhino will be selected automatically now.
 - Rhino will force enable view redraw after code execution to avoid the frozen viewport.
+
+### 0.1.7
+
+- Added support for Rhino 6.
+- Removed rarely used "minimize window" and "preserve log" function.
+- Fixed change settings doesn't take effect unless restart problem.

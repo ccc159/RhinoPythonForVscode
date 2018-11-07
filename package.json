@@ -3,7 +3,7 @@
     "displayName": "RhinoPython",
     "icon": "image/logo.png",
     "description": "A Visual Studio Code extension to program IronPython for rhino.",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "publisher": "jingchengchen",
     "engines": {
         "vscode": "^1.22.0"
@@ -56,17 +56,7 @@
                 "RhinoPython.ResetAndRun": {
                     "type": "boolean",
                     "default": true,
-                    "description": "True if you want to reset script engine every time you send code."
-                },
-                "RhinoPython.PreserveLog": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Specifies whether to keep the console log history or not."
-                },
-                "RhinoPython.MinimizeWindowWhenRunning": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Specifies whether to minimize the vs code editor when running the code."
+                    "description": "If you want to reset script engine every time you send code, set to True, otherwise False"
                 }
             }
         }

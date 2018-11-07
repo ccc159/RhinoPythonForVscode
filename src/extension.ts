@@ -8,9 +8,6 @@ import * as vscode from 'vscode';
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-    // load user settings
-    const RhinoPythonConfig = vscode.workspace.getConfiguration('RhinoPython');
-
     // send the messgage to Rhino
     var isRunning = false;
     var net = require('net');
@@ -27,11 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     client.on('connect', function() {
-        if (!RhinoPythonConfig.PreserveLog) {
-            vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => onDataReceivedDisplay());
-        } else {
-            onDataReceivedDisplay();
-        }
+        vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => onDataReceivedDisplay());
     });
 
     client.on('data', function(data: Buffer) {
@@ -60,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
     // register execute command
     let disposable = vscode.commands.registerCommand('extension.CodeSender', () => {
         // check if rhino python is enabled by the user
-        if (!RhinoPythonConfig.Enabled) { return; }
+        if (!vscode.workspace.getConfiguration('RhinoPython').Enabled) { return; }
         if (isRunning) {
             vscode.window.showWarningMessage('Cannot send code. An existing code is still running.');
             return;
@@ -83,21 +76,20 @@ export function activate(context: vscode.ExtensionContext) {
             var os = require('os');
 
             // check if reset engine
-            let reset = RhinoPythonConfig.ResetAndRun;
+            let reset = vscode.workspace.getConfiguration('RhinoPython').ResetAndRun;
 
             // check if it is temp file, if yes then save to a temp file
             let temp = editor.document.isUntitled;
             let run = true;
-            let minimize = RhinoPythonConfig.MinimizeWindowWhenRunning;
             if (temp) {
                 var tmpfolder = os.tmpdir();
                 let filename = tmpfolder + "\\TempScript.py";
                 fs.writeFileSync(filename, text);
-                let msgObject = JSON.stringify({ reset, temp, filename, run, minimize });
+                let msgObject = JSON.stringify({ reset, temp, filename, run });
                 SendToRhino(msgObject);
             } else {
                 let filename = editor.document.fileName;
-                let msgObject = JSON.stringify({ reset, temp, filename, run, minimize });
+                let msgObject = JSON.stringify({ reset, temp, filename, run });
                 editor.document.save().then(() => SendToRhino(msgObject));
             }
         }
