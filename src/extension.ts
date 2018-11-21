@@ -2,12 +2,13 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-
+// init an outputchannel
+var outputChannel = vscode.window.createOutputChannel('Rhino');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-
+    outputChannel.show(true);
     // send the messgage to Rhino
     var isRunning = false;
     var net = require('net');
@@ -19,16 +20,14 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }
 
-    function onDataReceivedDisplay () {
-        vscode.debug.activeDebugConsole.appendLine(`@ ====== ${(new Date()).toLocaleString()} ======`);
-    }
-
     client.on('connect', function() {
-        vscode.commands.executeCommand('workbench.debug.panel.action.clearReplAction').then(() => onDataReceivedDisplay());
+        outputChannel.clear();
+        outputChannel.appendLine(`====== ${(new Date()).toLocaleString()} ======`);
     });
 
     client.on('data', function(data: Buffer) {
-        vscode.debug.activeDebugConsole.append(data.toString());
+        let info: string = data.toString();
+        outputChannel.append(info);
     });
 
     // Add a 'close' event handler for the client socket
@@ -114,5 +113,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() {
-
+    outputChannel.hide();
+    outputChannel.dispose();
 }
