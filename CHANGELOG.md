@@ -38,3 +38,6 @@
 ## [0.1.8] - 2018-11-21
 - Fixed debugconsole not printing output. It is now printed in the OutputChannel.
 - Moved changelog from ReamMe to Changelog file.
+
+## [0.1.9] - 2018-11-30
+- Fixed OutputChannel doesn't show automatically the message from Rhino.

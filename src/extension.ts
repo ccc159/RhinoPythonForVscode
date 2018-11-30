@@ -26,7 +26,6 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     client.on('data', function(data: Buffer) {
-        outputChannel.show(true);
         let info: string = data.toString();
         outputChannel.append(info);
     });
