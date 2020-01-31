@@ -1,82 +1,82 @@
 {
-    "name": "rhinopython",
-    "displayName": "RhinoPython",
-    "icon": "image/logo.png",
-    "description": "A Visual Studio Code extension to program IronPython for rhino.",
-    "version": "0.1.9",
-    "publisher": "jingchengchen",
-    "engines": {
-        "vscode": "^1.22.0"
-    },
-    "categories": [
-        "Other"
+  "name": "rhinopython",
+  "displayName": "RhinoPython",
+  "icon": "image/logo.png",
+  "description": "A Visual Studio Code extension to program IronPython for rhino.",
+  "version": "0.1.10",
+  "publisher": "Design-to-Production",
+  "engines": {
+    "vscode": "^1.22.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "Rhino",
+    "Python",
+    "IronPython",
+    "PythonScript",
+    "RhinoScript"
+  ],
+  "activationEvents": [
+    "onCommand:extension.CodeSender",
+    "onCommand:extension.CodeSenderReset"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.CodeSender",
+        "title": "CodeSender"
+      },
+      {
+        "command": "extension.CodeSenderReset",
+        "title": "CodeSenderReset"
+      }
     ],
-    "keywords": [
-        "Rhino",
-        "Python",
-        "IronPython",
-        "PythonScript",
-        "RhinoScript"
+    "keybindings": [
+      {
+        "command": "extension.CodeSender",
+        "key": "F2"
+      },
+      {
+        "command": "extension.CodeSenderReset",
+        "key": "Ctrl+R"
+      }
     ],
-    "activationEvents": [
-        "onCommand:extension.CodeSender",
-        "onCommand:extension.CodeSenderReset"
-    ],
-    "main": "./out/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.CodeSender",
-                "title": "CodeSender"
-            },
-            {
-                "command": "extension.CodeSenderReset",
-                "title": "CodeSenderReset"
-            }
-        ],
-        "keybindings": [
-            {
-                "command": "extension.CodeSender",
-                "key": "F2"
-            },
-            {
-                "command": "extension.CodeSenderReset",
-                "key": "Ctrl+R"
-            }
-        ],
-        "configuration": {
-            "type": "object",
-            "title": "RhinoPython configuration",
-            "properties": {
-                "RhinoPython.Enabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Enable/Disable this RhinoPython extension."
-                },
-                "RhinoPython.ResetAndRun": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "If you want to reset script engine every time you send code, set to True, otherwise False"
-                }
-            }
+    "configuration": {
+      "type": "object",
+      "title": "RhinoPython configuration",
+      "properties": {
+        "RhinoPython.Enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/Disable this RhinoPython extension."
+        },
+        "RhinoPython.ResetAndRun": {
+          "type": "boolean",
+          "default": true,
+          "description": "If you want to reset script engine every time you send code, set to True, otherwise False"
         }
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "tslint": "^5.8.0",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ccc159/PythonScript.git"
+      }
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.6",
+    "tslint": "^5.8.0",
+    "@types/node": "^7.0.43",
+    "@types/mocha": "^2.2.42"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccc159/PythonScript.git"
+  }
 }
