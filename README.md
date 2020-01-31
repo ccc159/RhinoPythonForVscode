@@ -6,6 +6,8 @@ It is a **[DesignToProduction](http://designtoproduction.com/)** open source pro
 
 _From v0.1.7, it supports both **Rhino 5** and **Rhino 6**, with **correct** build being installed._
 
+:star: If you prefer to code in Visual Studio, **[RhinoPythonForVS](https://github.com/ccc159/RhinoPythonForVS)** is a lot faster and provides much better IntelliSense. Give it a try!
+
 ## Features
 
 The same way as you use the original editor. Just more efficient, simpler and faster.
@@ -87,3 +89,8 @@ The following settings can be configured under **User Settings**:
 
 - The debugger has not implemented yet.
 - It only supports one Rhino instance at a time. If you want to switch Rhino instance, either close the former Rhino instance or command `StopCodeListener` on the former one.
+
+
+## Acknowledgements
+
+The IntelliSense of RhinoCommon in VS Code is originated from [ironpython-stubs](https://github.com/gtalarico/ironpython-stubs). Thanks to [Gui Talarico](https://github.com/gtalarico).
