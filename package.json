@@ -4,7 +4,7 @@
   "icon": "image/logo.png",
   "description": "A Visual Studio Code extension to program IronPython for rhino.",
   "version": "0.1.10",
-  "publisher": "Design-to-Production",
+  "publisher": "designtoproduction",
   "engines": {
     "vscode": "^1.22.0"
   },
