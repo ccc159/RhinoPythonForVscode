@@ -4,7 +4,7 @@ RhinoPython is a plugin to allow you to code Rhino python script in VS Code edit
 
 It is a **[DesignToProduction](http://designtoproduction.com/)** open source project, programmed initially for internal use.
 
-:star: From v0.1.7, it supports both **Rhino 5** and **Rhino 6**, with **correct** build being installed.
+_From v0.1.7, it supports both **Rhino 5** and **Rhino 6**, with **correct** build being installed._
 
 ## Features
 
@@ -24,7 +24,7 @@ This is the client side of RhinoPython editor. To bridge it to Rhino you need a 
 + Install [VS code](https://code.visualstudio.com/).
 + Install [python for VS code](https://marketplace.visualstudio.com/items?itemName=ms-python.python). It's recommended to familarize yourself with python for VS code at this [post](https://code.visualstudio.com/docs/languages/python) first.
 + Install [RhinoPython for VS code](https://marketplace.visualstudio.com/items?itemName=jingchengchen.rhinopython).
-+ Download `CodeListener.rhi` file in [CodeListener latest release](https://github.com/ccc159/CodeListener/releases), and install it.
++ Download `CodeListener` file in [food4rhino](https://www.food4rhino.com/app/code-listener), and install it.
 
 
 + Start Rhino, click `tools -> pythonscript -> edit`, in the python editor, click `tools -> options`, copy those module paths. You might have additional libraries and you have to copy them as well.
