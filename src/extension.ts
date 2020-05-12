@@ -13,45 +13,43 @@ export function activate(context: vscode.ExtensionContext) {
   var net = require('net');
 
   var portNumber = 614;
-  var client = new net.Socket();
 
   function SendToRhino(messgage: string) {
-    client.connect(portNumber, function() {
+    const client = net.connect({ port: portNumber }, () => {
       isRunning = true;
       client.write(messgage);
     });
+
+    client.on('connect', function () {
+      outputChannel.show(true);
+      outputChannel.clear();
+      outputChannel.appendLine(`====== ${new Date().toLocaleString()} ======`);
+    });
+
+    client.on('data', function (data: any) {
+      let info: string = data.toString();
+      outputChannel.append(info);
+      client.end();
+    });
+
+    // Add a 'close' event handler for the client socket
+    client.on('end', function () {
+      isRunning = false;
+      console.log('Rhino disconnected.');
+    });
+
+    client.on('error', function (err: any) {
+      if (err.code === 'ECONNREFUSED') {
+        vscode.window.showWarningMessage('Cannot connect Rhino. Please make sure Rhino is running CodeListener.');
+      } else if (err.code === 'EISCONN') {
+        vscode.window.showWarningMessage('Cannot send code. An existing code is still running.');
+      } else {
+        vscode.window.showWarningMessage(err.toString());
+      }
+      isRunning = false;
+      client.end();
+    });
   }
-
-  client.on('connect', function() {
-    outputChannel.show(true);
-    outputChannel.clear();
-    outputChannel.appendLine(`====== ${new Date().toLocaleString()} ======`);
-  });
-
-  client.on('data', function(data: any) {
-    let info: string = data.toString();
-    outputChannel.append(info);
-    client.destroy();
-  });
-
-  // Add a 'close' event handler for the client socket
-  client.on('close', function() {
-    isRunning = false;
-    client.destroy();
-    console.log('Rhino disconnected.');
-  });
-
-  client.on('error', function(err: any) {
-    if (err.code === 'ECONNREFUSED') {
-      vscode.window.showWarningMessage('Cannot connect Rhino. Please make sure Rhino is running CodeListener.');
-    } else if (err.code === 'EISCONN') {
-      vscode.window.showWarningMessage('Cannot send code. An existing code is still running.');
-    } else {
-      vscode.window.showWarningMessage(err.toString());
-    }
-    isRunning = false;
-    client.destroy();
-  });
 
   // register execute command
   let disposable = vscode.commands.registerCommand('extension.CodeSender', async () => {
