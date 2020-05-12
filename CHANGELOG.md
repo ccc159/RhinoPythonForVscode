@@ -55,3 +55,7 @@
 ## [0.1.10] - 2020-01-31
 
 - Fixed `EPIPE` error when sending a second time.
+
+## [0.1.11] - 2020-05-12
+
+- Fixed `EPIPE`. Hopefully.
